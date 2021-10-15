@@ -62,9 +62,10 @@ struct CandidateFM: IFabricMethod{
 
 int main(){
     Candidate a("gg", 22, 234, FRACTION_EDRO, 345);
-    // Candidate* b = CandidateFM("gg2", 22, 234, FRACTION_EDRO, 345);
+    CandidateFM candidateCreator;
+    ICandidate* b = candidateCreator.create("gg2", 22, 234, FRACTION_EDRO, 345);
     cout << a.getFio() << endl;
-    // cout << b->getFio() << endl;
+    cout << b->getFio() << endl;
     cout << "hello" << endl;
     return 0;
 }
