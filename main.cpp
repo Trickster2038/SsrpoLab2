@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <list>
+#include <vector>
 #include <iomanip>
 
 using namespace std;
@@ -61,11 +61,23 @@ struct CandidateFM: IFabricMethod{
 };
 
 int main(){
-    Candidate a("gg", 22, 234, FRACTION_EDRO, 345);
+    vector<ICandidate*> candidates;
     CandidateFM candidateCreator;
-    ICandidate* b = candidateCreator.create("gg2", 22, 234, FRACTION_EDRO, 345);
-    cout << a.getFio() << endl;
-    cout << b->getFio() << endl;
-    cout << "hello" << endl;
+    candidates.push_back(candidateCreator.create("Zhirinovsky V.V.", 75, 
+        20000156, FRACTION_LDPR, 42345));
+    candidates.push_back(candidateCreator.create("Kaz M.E", 36, 
+        10000003, FRACTION_YABLOKO, 12043));
+    candidates.push_back(candidateCreator.create("Zyganov G.A", 77, 
+        15000002,FRACTION_KPRF, 24021));
+
+    for(const auto cand: candidates){
+        cout << cand->getFio() << endl
+        << "Age: " << cand->getAge() << endl
+        << "Income: " << cand->getIncome() << endl
+        << "Fraction: " << cand->getFraction() << endl
+        << "Voices: " << cand->getVoices() << endl
+        << endl << endl;
+    }
+
     return 0;
 }
