@@ -39,6 +39,36 @@
 
 Проект хранится в репозитории по адресу: [u6-52b-svastakhov-nvlapshin-l2](https://bmstu.codes/lsx/mstd/iu6-5-2021/iu6-52b-svastakhov-nvlapshin/l2).
 
+## Диаграмма классов
+
+![lab2](lab2.png)
+
+## Функция main
+
+```c++
+int main(){
+    vector<ICandidate*> candidates;
+    CandidateFM candidateCreator;
+    candidates.push_back(candidateCreator.create("Zhirinovsky V.V.", 75, 
+        20000156, FRACTION_LDPR, 42345));
+    candidates.push_back(candidateCreator.create("Kaz M.E", 36, 
+        10000003, FRACTION_YABLOKO, 12043));
+    candidates.push_back(candidateCreator.create("Zyganov G.A", 77, 
+        15000002,FRACTION_KPRF, 24021));
+
+    for(const auto cand: candidates){
+        cout << cand->getFio() << endl
+        << "Age: " << cand->getAge() << endl
+        << "Income: " << cand->getIncome() << endl
+        << "Fraction: " << cand->getFraction() << endl
+        << "Voices: " << cand->getVoices() << endl
+        << endl << endl;
+    }
+
+    return 0;
+}
+```
+
 ## Выводы
 
 В данной лабораторной работе мы познакомились с основными ШП, а также реализовали на практике ШП Factory method (фабричный метод), позволяющий создавать объекты с заданным интерфейсом, абстрагируясь от их реализации.
