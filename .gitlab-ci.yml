@@ -44,5 +44,5 @@ pages:
   artifacts:
     paths:
     - public
-  except:
-  - dev
+  only:
+  - main
