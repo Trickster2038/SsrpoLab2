@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -11,6 +12,22 @@ enum Fraction
     FRACTION_LDPR,
     FRACTION_NOVYE_LUDI,
     FRACTION_KPRF
+};
+
+class Converter
+{
+private:
+    static inline map<Fraction, string> fraction_to_string = {{FRACTION_EDRO, "EDRO"},
+                                                              {FRACTION_YABLOKO, "YABLOKO"},
+                                                              {FRACTION_LDPR, "LDPR"},
+                                                              {FRACTION_NOVYE_LUDI, "NOVIE LUDI"},
+                                                              {FRACTION_KPRF, "KPRF"}};
+
+public:
+    static const string &toString(Fraction fraction_code)
+    {
+        return fraction_to_string.find(fraction_code)->second;
+    }
 };
 
 struct ICandidate
@@ -55,7 +72,7 @@ public:
         cout << fio << endl
              << "Age: " << age << endl;
         printf("Income: %.2f \n", income);
-        cout << "Fraction ID: " << fraction << endl
+        cout << "Fraction: " << Converter::toString(fraction) << endl
              << "Voices: " << voices << endl
              << endl
              << endl;
@@ -92,7 +109,7 @@ public:
     {
         cout << fio << endl
              << "Age: " << age << endl
-             << "Fraction ID: " << fraction << endl
+             << "Fraction ID: " << Converter::toString(fraction) << endl
              << "Voices: " << voices << endl
              << endl
              << endl;
