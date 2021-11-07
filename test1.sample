@@ -1,21 +1,37 @@
+Gosduma list:
+
 Zhirinovsky V.V.
 Age: 75
-Income: 20000156
-Fraction: 2
+Income: 20000156.00 
+Fraction ID: 2
 Voices: 42345
 
 
 Kaz M.E
 Age: 36
-Income: 10000003
-Fraction: 1
+Income: 10000003.00 
+Fraction ID: 1
 Voices: 12043
 
 
 Zyganov G.A
 Age: 77
-Income: 15000002
-Fraction: 4
+Income: 15000002.00 
+Fraction ID: 4
 Voices: 24021
+
+
+Municipal list:
+
+Urov S.G.
+Age: 38
+Fraction ID: 0
+Voices: 8021
+
+
+Zhirkov E.I.
+Age: 61
+Fraction ID: 0
+Voices: 7022
 
 

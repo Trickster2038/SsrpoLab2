@@ -3,6 +3,7 @@ image: ubuntu:18.04
 stages:
   - compile
   - test
+  - pages
 
 # Задаём команды, которые будут выполнены до прогона скриптов
 before_script:
@@ -28,3 +29,20 @@ test:
   script:
     - ./main > test1.out
     - diff test1.sample test1.out
+
+  # Используем GitLab Pages для публикации Doxygen-документации
+pages:
+  stage: pages
+  script:
+  # Устанавливаем пакеты
+  - apt-get -y install doxygen
+  - apt-get -y install graphviz
+  # Прогоняем Doxygen
+  - doxygen Doxyfile.cfg
+  # Диплоим
+  - mv html/ public/
+  artifacts:
+    paths:
+    - public
+  only:
+  - master

@@ -35,6 +35,8 @@
 выполните создание карточки из вашего домашнего задания и поместите ее в контейнер.
 Выполните вывод содержимого контейнера в стандартный поток.
 
+Предположим, что есть два вида кандидатов: кандидаты в Госдуму и в муниципальные собрания. В обоих случаях должен существовать метод получения информации о кандидате printInfo() и основанный на нем метод вывода списка кандидатов VotingList.printList(). Пусть в случае муниципального кандидата информация о доходе не является публичной и не должна выводиться методом printInfo(). Тогда используем шаблон фабричного метода, сам фабричный метод будем передовать в класс списка кандидатов (VotingList), чтобы он вызывался при добавлении кандидата.
+
 ## Адрес проекта
 
 Проект хранится в репозитории по адресу: [u6-52b-svastakhov-nvlapshin-l2](https://bmstu.codes/lsx/mstd/iu6-5-2021/iu6-52b-svastakhov-nvlapshin/l2).
@@ -46,24 +48,24 @@
 ## Функция main
 
 ```c++
-int main(){
-    vector<ICandidate*> candidates;
-    CandidateFM candidateCreator;
-    candidates.push_back(candidateCreator.create("Zhirinovsky V.V.", 75, 
-        20000156, FRACTION_LDPR, 42345));
-    candidates.push_back(candidateCreator.create("Kaz M.E", 36, 
-        10000003, FRACTION_YABLOKO, 12043));
-    candidates.push_back(candidateCreator.create("Zyganov G.A", 77, 
-        15000002,FRACTION_KPRF, 24021));
+int main()
+{
+    CandidateGosdumiFM candidateGosdumiCreator;
+    VotingList gosdumaVoting(&candidateGosdumiCreator);
+    gosdumaVoting.addCandidate("Zhirinovsky V.V.", 75, 20000156, FRACTION_LDPR, 42345);
+    gosdumaVoting.addCandidate("Kaz M.E", 36, 10000003, FRACTION_YABLOKO, 12043);
+    gosdumaVoting.addCandidate("Zyganov G.A", 77, 15000002, FRACTION_KPRF, 24021);
 
-    for(const auto cand: candidates){
-        cout << cand->getFio() << endl
-        << "Age: " << cand->getAge() << endl
-        << "Income: " << cand->getIncome() << endl
-        << "Fraction: " << cand->getFraction() << endl
-        << "Voices: " << cand->getVoices() << endl
-        << endl << endl;
-    }
+    cout << "Gosduma list:\n" << endl;
+    gosdumaVoting.printList();
+
+    CandidateMunicipalFM candidateMunicipalCreator;
+    VotingList municipalVoting(&candidateMunicipalCreator);
+    municipalVoting.addCandidate("Urov S.G.", 38, 150202, FRACTION_EDRO, 8021);
+    municipalVoting.addCandidate("Zhirkov E.I.", 61, 190213, FRACTION_EDRO, 7022);
+
+    cout << "Municipal list:\n" << endl;
+    municipalVoting.printList();
 
     return 0;
 }
@@ -71,4 +73,4 @@ int main(){
 
 ## Выводы
 
-В данной лабораторной работе мы познакомились с основными ШП, а также реализовали на практике ШП Factory method (фабричный метод), позволяющий создавать объекты с заданным интерфейсом, абстрагируясь от их реализации.
+В данной лабораторной работе мы познакомились с основными ШП, а также реализовали на практике ШП Factory method (фабричный метод), позволяющий создавать объекты с заданным интерфейсом, абстрагируясь от их реализации. Кроме того в ходе данной лабораторной работы был изучен процесс автоматической генерации документации с помощью CI сценариев.
