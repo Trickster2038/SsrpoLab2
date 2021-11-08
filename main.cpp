@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <memory>
 
 using namespace std;
 
@@ -116,48 +117,50 @@ public:
     };
 };
 
-struct IFabricMethod
+struct IFActoryMethod
 {
-    virtual ICandidate *create(string _fio, uint _age,
+    virtual shared_ptr<ICandidate> create(string _fio, uint _age,
                                uint _income, Fraction _fraction, uint _voices) = 0;
+    virtual ~IFActoryMethod() = default;
 };
 
-struct CandidateGosdumiFM : IFabricMethod
+struct CandidateGosdumiFM : IFActoryMethod
 {
-    ICandidate *create(string _fio, uint _age, uint _income,
+    shared_ptr<ICandidate> create(string _fio, uint _age, uint _income,
                        Fraction _fraction, uint _voices) override
     {
-        return new CandidateGosdumi(_fio, _age, _income,
+        return make_shared<CandidateGosdumi>(_fio, _age, _income,
                                     _fraction, _voices);
     };
 };
 
-struct CandidateMunicipalFM : IFabricMethod
+struct CandidateMunicipalFM : IFActoryMethod
 {
-    ICandidate *create(string _fio, uint _age, uint _income,
+    shared_ptr<ICandidate> create(string _fio, uint _age, uint _income,
                        Fraction _fraction, uint _voices) override
     {
-        return new CandidateMunicipal(_fio, _age, _income,
+        return make_shared<CandidateMunicipal>(_fio, _age, _income,
                                       _fraction, _voices);
     };
 };
 
-struct VotingList
+struct VotingList: public enable_shared_from_this<VotingList>
 {
 private:
-    vector<ICandidate *> candidates;
-    IFabricMethod *fm;
+    vector<shared_ptr<ICandidate>> candidates;
+    shared_ptr<IFActoryMethod> fm;
 
 public:
-    VotingList(IFabricMethod *fm_)
+    VotingList(IFActoryMethod* fm_)
     {
-        fm = fm_;
+        shared_ptr<IFActoryMethod> shared_fm(fm_);
+        fm = move(shared_fm);
     }
     void addCandidate(string _fio, uint _age, uint _income,
                       Fraction _fraction, uint _voices)
     {
-        candidates.push_back(fm->create(_fio, _age, _income,
-                                        _fraction, _voices));
+        candidates.push_back(move(fm->create(_fio, _age, _income,
+                                        _fraction, _voices)));
     }
     void printList()
     {
@@ -170,8 +173,8 @@ public:
 
 int main()
 {
-    CandidateGosdumiFM candidateGosdumiCreator;
-    VotingList gosdumaVoting(&candidateGosdumiCreator);
+    CandidateGosdumiFM* candidateGosdumiCreator = new CandidateGosdumiFM();
+    VotingList gosdumaVoting(candidateGosdumiCreator);
     gosdumaVoting.addCandidate("Zhirinovsky V.V.", 75, 20000156, FRACTION_LDPR, 42345);
     gosdumaVoting.addCandidate("Kaz M.E", 36, 10000003, FRACTION_YABLOKO, 12043);
     gosdumaVoting.addCandidate("Zyganov G.A", 77, 15000002, FRACTION_KPRF, 24021);
@@ -180,8 +183,8 @@ int main()
          << endl;
     gosdumaVoting.printList();
 
-    CandidateMunicipalFM candidateMunicipalCreator;
-    VotingList municipalVoting(&candidateMunicipalCreator);
+    CandidateMunicipalFM* candidateMunicipalCreator = new CandidateMunicipalFM();
+    VotingList municipalVoting(candidateMunicipalCreator);
     municipalVoting.addCandidate("Urov S.G.", 38, 150202, FRACTION_EDRO, 8021);
     municipalVoting.addCandidate("Zhirkov E.I.", 61, 190213, FRACTION_EDRO, 7022);
 
