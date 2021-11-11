@@ -33,11 +33,6 @@ public:
 
 struct ICandidate
 {
-    virtual string getFio() const = 0;
-    virtual uint getAge() const = 0;
-    virtual uint getIncome() const = 0;
-    virtual Fraction getFraction() const = 0;
-    virtual uint getVoices() const = 0;
     virtual void printInfo() const = 0;
     virtual ~ICandidate() {}
 };
@@ -63,11 +58,11 @@ public:
         voices = _voices;
     };
 
-    string getFio() const override { return fio; };
-    uint getAge() const override { return age; };
-    uint getIncome() const override { return income; };
-    Fraction getFraction() const override { return fraction; };
-    uint getVoices() const override { return voices; };
+    string getFio() const { return fio; };
+    uint getAge() const { return age; };
+    uint getIncome() const { return income; };
+    Fraction getFraction() const { return fraction; };
+    uint getVoices() const { return voices; };
     void printInfo() const override
     {
         cout << fio << endl
@@ -89,7 +84,6 @@ private:
     float income;
     Fraction fraction;
     uint voices;
-    uint getIncome() const override { return income; };
 
 public:
     CandidateMunicipal(string _fio, uint _age, uint _income,
@@ -102,10 +96,10 @@ public:
         voices = _voices;
     };
 
-    string getFio() const override { return fio; };
-    uint getAge() const override { return age; };
-    Fraction getFraction() const override { return fraction; };
-    uint getVoices() const override { return voices; };
+    string getFio() const { return fio; };
+    uint getAge() const { return age; };
+    Fraction getFraction() const { return fraction; };
+    uint getVoices() const { return voices; };
     void printInfo() const override
     {
         cout << fio << endl
